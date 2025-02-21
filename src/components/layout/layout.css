@@ -1,0 +1,28 @@
+header {
+  padding: 10px 20px;
+  background-color: #eee;
+}
+header .main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header .main-header .main-logo a {
+  font-size: calc(var(--main-font-size) * 1.5);
+  font-weight: bold;
+}
+header .main-header ul {
+  display: flex;
+  gap: 10px;
+}
+.main-div {
+  min-height: 100vh;
+}
+main {
+  width: 100%;
+  min-height: var(--min-page-height);
+}
+
+@media (max-width: 767px) {
+  /*  */
+}
