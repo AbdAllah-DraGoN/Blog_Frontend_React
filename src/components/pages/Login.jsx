@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { handleInputsChange } from "../../functions/handleForms";
+import { handleInputsChange, validateEmail } from "../../functions/handleForms";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { MAIN_API_URL } from "../../data";
+import { saveToken } from "../../functions/handleTokens";
+import { useNavigate } from "react-router-dom";
+import { saveUserData } from "../../functions/handleUserData";
 
 const Login = () => {
-  // const MAIN_API_URL = "http://127.0.0.1:8000/api";
-  const [data, setData] = useState(null);
+  const navigate = useNavigate();
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
@@ -15,6 +17,11 @@ const Login = () => {
     handleInputsChange(e, formValues, setFormValues);
   };
   const handleSubmitBtnClick = () => {
+    // validate inputs
+    if (!validateEmail(formValues.email)) {
+      return;
+    }
+
     const loading = toast.info("Loading...", {
       autoClose: false,
       closeOnClick: false,
@@ -28,12 +35,10 @@ const Login = () => {
       })
       .then((res) => {
         console.log(res);
-        setData(res.data);
-        if (data.message) {
-          toast.success(res.data.message);
-        } else {
-          console.log("have data error");
-        }
+        saveToken(res.data.token);
+        saveUserData(res.data.data);
+        toast.success(res.data.message);
+        navigate("/");
       })
       .catch((rej) => {
         console.log(rej);

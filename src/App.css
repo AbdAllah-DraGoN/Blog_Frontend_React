@@ -70,6 +70,7 @@ h1.page-header {
   justify-content: center;
   gap: 10px;
   align-items: center;
+  margin-bottom: 1rem;
 }
 .loading {
   font-size: calc(var(--main-font-size) * 1.2);

@@ -1,13 +1,15 @@
 import { useState } from "react";
-import "./pages.css";
-import { handleInputsChange } from "../../functions/handleForms";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { handleInputsChange, validateEmail } from "../../functions/handleForms";
 import { alertErrorsFromObject } from "../../functions/handleAlerts";
 import { MAIN_API_URL } from "../../data";
+import "./pages.css";
 
 const Register = () => {
-  const [data, setData] = useState(null);
+  const navigate = useNavigate();
+
   const [formValues, setFormValues] = useState({
     name: "",
     email: "",
@@ -19,7 +21,28 @@ const Register = () => {
     handleInputsChange(e, formValues, setFormValues);
   };
   const handleSubmitBtnClick = () => {
-    // handleSubmitBtnsClick(formValues);
+    // validate inputs
+    let isValid = true;
+    isValid = validateEmail(formValues.email);
+    if (3 > formValues.name.length || formValues.name.length > 25) {
+      toast.error("Name must be between 3 and 25 characters");
+      isValid = false;
+    }
+    if (!formValues.image) {
+      toast.error("You must upload a photo");
+      isValid = false;
+    }
+    if (formValues.password.length < 6) {
+      toast.error("Password must be minimum 6 characters");
+      isValid = false;
+    }
+    if (formValues.password !== formValues["password_confirmation"]) {
+      toast.error("Password and password confirmation must match");
+      isValid = false;
+    }
+    if (!isValid) {
+      return;
+    }
 
     // send request
     const form = new FormData();
@@ -40,12 +63,8 @@ const Register = () => {
       })
       .then((res) => {
         console.log(res);
-        setData(res.data);
-        if (data.message) {
-          toast.success(data.message);
-        } else {
-          console.log("have data error");
-        }
+        navigate("/login");
+        toast.success(res.data.message);
       })
       .catch((rej) => {
         // console.log(rej);

@@ -1,14 +1,13 @@
+import React from "react";
 import { Link } from "react-router-dom";
 import { getUserData } from "../../functions/handleUserData";
-import "./pages.css";
 
-const Home = () => {
+const Profile = () => {
   const user = getUserData();
-  // console.log(user);
 
   return (
     <div>
-      <h1 className="page-header"> Home Page</h1>
+      <h1 className="page-header">User Profile</h1>
       <div className="my-container" style={{ textAlign: "center" }}>
         {user ? (
           <div className="current-user-info">
@@ -40,4 +39,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Profile;

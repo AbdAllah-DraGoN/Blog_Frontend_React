@@ -7,23 +7,22 @@ const useGetApi = (url) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const fetchData = async (path = url) => {
+    try {
+      const response = await axios.get(MAIN_API_URL + path);
+      setData(response.data); // تخزين البيانات في state
+      setError(null); // مسح الخطأ إذا كان الطلب ناجحًا
+    } catch (err) {
+      setError(err); // تخزين رسالة الخطأ في state
+    } finally {
+      setLoading(false); // تعيين التحميل إلى false بعد انتهاء الطلب
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(MAIN_API_URL + url);
-        setData(response.data); // تخزين البيانات في state
-        setError(null); // مسح الخطأ إذا كان الطلب ناجحًا
-      } catch (err) {
-        setError(err); // تخزين رسالة الخطأ في state
-      } finally {
-        setLoading(false); // تعيين التحميل إلى false بعد انتهاء الطلب
-      }
-    };
-
-    fetchData();
+    fetchData(url);
   }, [url]);
 
-  return [data, loading, error];
+  return [data, loading, error, fetchData];
 };
 
 export default useGetApi;

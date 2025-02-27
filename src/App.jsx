@@ -9,6 +9,8 @@ import Register from "./components/pages/Register";
 import NotFound from "./components/pages/NotFound";
 import Posts from "./components/pages/posts";
 import SinglePost from "./components/pages/single-post/SinglePost";
+import Users from "./components/pages/Users";
+import Profile from "./components/pages/Profile";
 
 function App() {
   return (
@@ -27,7 +29,9 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="posts" element={<Posts />} />
-            <Route path="posts/:id/" element={<SinglePost />} />
+            <Route path="posts/:id" element={<SinglePost />} />
+            <Route path="users" element={<Users />} />
+            <Route path="profile/:id" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

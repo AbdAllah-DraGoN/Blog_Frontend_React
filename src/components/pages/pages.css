@@ -36,3 +36,9 @@
   background-color: #5e61e5;
   transform: translateY(-1px);
 }
+/* =========================== */
+.posts-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
