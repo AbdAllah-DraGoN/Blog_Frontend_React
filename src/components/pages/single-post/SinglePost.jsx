@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./single-post.css";
 import useGetApi from "../../../hooks/useGetApi";
 import Loader from "../../elements/loader/Loader";
 import { toast } from "react-toastify";
 import NotFound from "../NotFound";
 import { handleDates } from "../../../functions/handleDates";
-import { MAIN_API_URL } from "../../../data";
+import { BASE_URL, MAIN_API_URL } from "../../../data";
 import axios from "axios";
 import { getToken } from "../../../functions/handleTokens";
 
 const SinglePost = () => {
   const userToken = getToken();
-  const { id } = useParams(); // استخراج postId من الرابط
+  const { id } = useParams();
   // console.log(id);
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState(null);
@@ -83,12 +83,13 @@ const SinglePost = () => {
           <>
             <div className="post-content">
               <img
-                src={`http://localhost:8000/${post.image}`}
+                src={`${post.image}`}
+                // src={`${BASE_URL}/${post.image}`}
                 alt="Post"
                 className="post-image"
               />
               <h1 className="post-title">{post.title}</h1>
-              <p className="post-category">Category: {post.category}</p>
+              <p className="post-category">Category: {post.category.name}</p>
               <p className="post-body">{post.body}</p>
               {post.is_favorite && (
                 <button
@@ -101,16 +102,15 @@ const SinglePost = () => {
                     : "Add To Favorites"}
                 </button>
               )}
-              <div className="post-author">
-                <img
-                  src={`http://localhost:8000/${post.user.image}`}
-                  alt="User"
-                />
-                <div className="post-author-info">
-                  <p className="post-author-name">{post.user.name}</p>
-                  <p className="post-author-email">{post.user.email}</p>
+              <Link to={`/users/profile/${post.user.id}`}>
+                <div className="post-author">
+                  <img src={`${BASE_URL}/${post.user.image}`} alt="User" />
+                  <div className="post-author-info">
+                    <p className="post-author-name">{post.user.name}</p>
+                    <p className="post-author-email">{post.user.email}</p>
+                  </div>
                 </div>
-              </div>
+              </Link>
             </div>
             <div className="comments-section">
               {comments && (
@@ -123,15 +123,17 @@ const SinglePost = () => {
                       id={comment.id}
                       className="comment-box"
                     >
-                      <div className="comment-author">
-                        <img
-                          src={`http://localhost:8000/${comment.user.image}`}
-                          alt="User"
-                        />
-                        <p className="comment-author-name">
-                          {comment.user.name}
-                        </p>
-                      </div>
+                      <Link to={`/users/profile/${comment.user.id}`}>
+                        <div className="comment-author">
+                          <img
+                            src={`${BASE_URL}/${comment.user.image}`}
+                            alt="User"
+                          />
+                          <p className="comment-author-name">
+                            {comment.user.name}
+                          </p>
+                        </div>
+                      </Link>
                       <div className="comment-body">
                         <p className="comment-content">{comment.body}</p>
                         <p className="comment-date">
@@ -142,18 +144,20 @@ const SinglePost = () => {
                   ))}
                 </>
               )}
-              <div className="comment-form">
-                <textarea
-                  className="comment-input"
-                  rows="3"
-                  placeholder="Add a comment..."
-                  value={newComment}
-                  onChange={(e) => setNewComment(e.target.value)}
-                ></textarea>
-                <button className="comment-button" onClick={handleAddComment}>
-                  Add Comment
-                </button>
-              </div>
+              {userToken && (
+                <div className="comment-form">
+                  <textarea
+                    className="comment-input"
+                    rows="3"
+                    placeholder="Add a comment..."
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                  ></textarea>
+                  <button className="comment-button" onClick={handleAddComment}>
+                    Add Comment
+                  </button>
+                </div>
+              )}
             </div>
           </>
         )}

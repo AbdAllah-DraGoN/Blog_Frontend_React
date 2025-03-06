@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { MAIN_API_URL } from "../../data";
 import { saveToken } from "../../functions/handleTokens";
 import { useNavigate } from "react-router-dom";
-import { saveUserData } from "../../functions/handleUserData";
+import { saveUser } from "../../functions/handleUserData";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ const Login = () => {
       .then((res) => {
         console.log(res);
         saveToken(res.data.token);
-        saveUserData(res.data.data);
+        saveUser(res.data.data);
         toast.success(res.data.message);
         navigate("/");
       })

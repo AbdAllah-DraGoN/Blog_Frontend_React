@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-import { getUserData } from "../../functions/handleUserData";
+import { getCurrentUser } from "../../functions/handleUserData";
 import "./pages.css";
+import { BASE_URL } from "../../data";
 
 const Home = () => {
-  const user = getUserData();
+  const user = getCurrentUser();
   // console.log(user);
 
   return (
@@ -13,7 +14,7 @@ const Home = () => {
         {user ? (
           <div className="current-user-info">
             <img
-              src={`http://localhost:8000/${user.image}`}
+              src={`${BASE_URL}/${user.image}`}
               alt="User"
               style={{ width: "250px", height: "250px", borderRadius: "50%" }}
             />

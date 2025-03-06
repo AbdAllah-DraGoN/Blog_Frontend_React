@@ -1,10 +1,10 @@
 import { Outlet, Link } from "react-router-dom";
 
 import "./layout.css";
-import { getUserData } from "../../functions/handleUserData";
+import { getCurrentUser } from "../../functions/handleUserData";
 
 function Layout() {
-  const user = getUserData();
+  const user = getCurrentUser();
 
   return (
     <div className="main-div">
@@ -24,7 +24,7 @@ function Layout() {
                   <Link to="/users">Users</Link>
                 </li>
                 <li>
-                  <Link to={`/profile/${user.id}`}>Profile</Link>
+                  <Link to={`/users/profile/${user.id}`}>Profile</Link>
                 </li>
               </>
             ) : (

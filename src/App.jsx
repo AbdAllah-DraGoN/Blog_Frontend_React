@@ -10,7 +10,9 @@ import NotFound from "./components/pages/NotFound";
 import Posts from "./components/pages/posts";
 import SinglePost from "./components/pages/single-post/SinglePost";
 import Users from "./components/pages/Users";
-import Profile from "./components/pages/Profile";
+import UserProfile from "./components/pages/profile/UserProfile";
+import CreatePost from "./components/pages/CreatePost";
+import EditPost from "./components/pages/EditPost";
 
 function App() {
   return (
@@ -30,8 +32,10 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="posts" element={<Posts />} />
             <Route path="posts/:id" element={<SinglePost />} />
+            <Route path="posts/create" element={<CreatePost />} />
+            <Route path="posts/:id/edit" element={<EditPost />} />
             <Route path="users" element={<Users />} />
-            <Route path="profile/:id" element={<Profile />} />
+            <Route path="users/profile/:id?" element={<UserProfile />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
