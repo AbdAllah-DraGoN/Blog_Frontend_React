@@ -6,11 +6,10 @@ import Loader from "../elements/loader/Loader";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
-  const [data, loading, error] = useGetApi("/users?limit=20");
+  const [data, loadings] = useGetApi("/users?limit=20");
   useEffect(() => {
     data && setUsers(data.data);
-    error && console.log(error);
-  }, [data, error]);
+  }, [data]);
   return (
     <div className="my-container">
       <h1 className="page-header">All Users</h1>

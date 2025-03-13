@@ -5,11 +5,10 @@ import Loader from "../../elements/loader/Loader";
 
 const OtherUserProfile = ({ id }) => {
   const [user, setUser] = useState(null);
-  const [data, loading, error] = useGetApi(`/users/${id}`);
+  const [data, loading] = useGetApi(`/users/${id}`);
   useEffect(() => {
     data && setUser(data.data);
-    error && console.log(error);
-  }, [data, error]);
+  }, [data]);
   return (
     <div className="my-container">
       <Loader state={loading} />

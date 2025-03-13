@@ -6,6 +6,7 @@ import { MAIN_API_URL } from "../../data";
 import { saveToken } from "../../functions/handleTokens";
 import { useNavigate } from "react-router-dom";
 import { saveUser } from "../../functions/handleUserData";
+import axiosApiRequest from "../../functions/axiosApiRequest";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -22,31 +23,17 @@ const Login = () => {
       return;
     }
 
-    const loading = toast.info("Loading...", {
-      autoClose: false,
-      closeOnClick: false,
-    });
-    axios
-      .post(`${MAIN_API_URL}/login`, formValues, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        saveToken(res.data.token);
-        saveUser(res.data.data);
-        toast.success(res.data.message);
+    axiosApiRequest(
+      "post",
+      "/login", // url
+      formValues, // body Parameters
+      {}, // additionals headeres
+      (d) => {
+        saveToken(d.token);
+        saveUser(d.data);
         navigate("/");
-      })
-      .catch((rej) => {
-        console.log(rej);
-        toast.error(rej.response.data.message);
-      })
-      .finally(() => {
-        toast.dismiss(loading);
-      });
+      } // function run in "then()"
+    );
   };
 
   return (

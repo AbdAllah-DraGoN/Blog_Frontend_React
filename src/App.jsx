@@ -7,14 +7,22 @@ import Home from "./components/pages/Home";
 import Login from "./components/pages/Login";
 import Register from "./components/pages/Register";
 import NotFound from "./components/pages/NotFound";
-import Posts from "./components/pages/posts";
+import Posts from "./components/pages/Posts";
 import SinglePost from "./components/pages/single-post/SinglePost";
 import Users from "./components/pages/Users";
 import UserProfile from "./components/pages/profile/UserProfile";
 import CreatePost from "./components/pages/CreatePost";
 import EditPost from "./components/pages/EditPost";
+import Favorites from "./components/pages/Favorites";
 
 function App() {
+  const todoList = [
+    "pagination => posts, users, comments, user posts, favorite posts ♻♻♻",
+    "Update localstoreage to  useContext",
+    "Update folders and files structure",
+    "Update UI",
+    // "",
+  ];
   return (
     <>
       <BrowserRouter>
@@ -27,7 +35,7 @@ function App() {
         />
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
+            <Route index element={<Home todoList={todoList} />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="posts" element={<Posts />} />
@@ -35,6 +43,7 @@ function App() {
             <Route path="posts/create" element={<CreatePost />} />
             <Route path="posts/:id/edit" element={<EditPost />} />
             <Route path="users" element={<Users />} />
+            <Route path="favorites" element={<Favorites />} />
             <Route path="users/profile/:id?" element={<UserProfile />} />
             <Route path="*" element={<NotFound />} />
           </Route>

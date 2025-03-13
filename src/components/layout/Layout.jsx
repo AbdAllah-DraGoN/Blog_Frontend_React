@@ -21,10 +21,16 @@ function Layout() {
             {user ? (
               <>
                 <li>
+                  <Link to="/posts/create">Add Post</Link>
+                </li>
+                <li>
                   <Link to="/users">Users</Link>
                 </li>
                 <li>
                   <Link to={`/users/profile/${user.id}`}>Profile</Link>
+                </li>
+                <li>
+                  <Link to={`/favorites`}>Favorites</Link>
                 </li>
               </>
             ) : (

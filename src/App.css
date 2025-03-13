@@ -72,6 +72,14 @@ h1.page-header {
   align-items: center;
   margin-bottom: 1rem;
 }
+.image-input-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #eee;
+  border-radius: 6px;
+}
 .loading {
   font-size: calc(var(--main-font-size) * 1.2);
   font-weight: bold;

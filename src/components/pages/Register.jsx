@@ -6,6 +6,7 @@ import { handleInputsChange, validateEmail } from "../../functions/handleForms";
 import { alertErrorsFromObject } from "../../functions/handleAlerts";
 import { MAIN_API_URL } from "../../data";
 import "./pages.css";
+import axiosApiRequest from "../../functions/axiosApiRequest";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -50,35 +51,20 @@ const Register = () => {
     for (const input in formValues) {
       form.append(input, formValues[input]);
     }
-    const loading = toast.info("Loading...", {
-      autoClose: false,
-      closeOnClick: false,
-    });
-    axios
-      .post(`${MAIN_API_URL}/register`, form, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        navigate("/login");
-        toast.success(res.data.message);
-      })
-      .catch((rej) => {
-        // console.log(rej);
-        const errors = rej.response.data.errors;
 
-        if (errors) {
-          alertErrorsFromObject(errors);
-        } else {
-          console.log("you have a error in the error");
-        }
-      })
-      .finally(() => {
-        toast.dismiss(loading);
-      });
+    // Send Register Request
+    axiosApiRequest(
+      "post",
+      "/register", // url
+      form, // body Parameters
+      {}, // additionals headeres
+      (d) => {
+        navigate("/login");
+      }, // function run in "then()"
+      (d) => {
+        // function run in "catch()"
+      }
+    );
   };
 
   return (
